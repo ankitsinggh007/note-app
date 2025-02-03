@@ -15,7 +15,6 @@ app.use(cors());
 // Connect to MongoDB
 connectDB();
 
-app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes

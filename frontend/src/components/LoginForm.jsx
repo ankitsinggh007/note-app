@@ -3,30 +3,27 @@ import ResponsiveWrapper from "./ResponsiveWrapper";
 import { useState } from 'react';
 import { z } from 'zod';
 import { Link } from 'react-router-dom';
+import { useAuth } from "../context/AuthContext";
 const loginSchema = z.object({
     email: z.string().email('Invalid email address'),
     password: z.string().min(3, 'Password must be at least 3 characters long'),
   });
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const { loginUser, loading, error, user} = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    console.log("hello world  ")
     e.preventDefault();
-
     try {
-      // Validate data before sending
-      loginSchema.parse({ email, password });
-
-      // If valid, proceed with the backend call
-      // Make API call here
-      console.log('Proceed to backend call');
-      
+      await loginUser(email, password);
+      console.log("User logged in successfully");
     } catch (err) {
-      setError(err.errors[0].message); // Show error message from validation
+      console.error(err.message);
     }
   };
+  console.log(user,"user");
 
   return (
     <ResponsiveWrapper>

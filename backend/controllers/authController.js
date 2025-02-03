@@ -15,11 +15,31 @@ export const registerUser = async (req, res) => {
     // You can add password validation here if needed
     // Example: Check if password meets a minimum length or complexity
 
+    console.log(userExists,"userexist")
     // Create a new user
     const user = new User({ email, password, username });
     await user.save();
+      
+    // Generate JWT token
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    res.status(201).json({ message: 'User created successfully' });
+    // Set the token in the cookie
+    res.cookie("token", token, { httpOnly: true, secure: false, sameSite: "none" });
+
+
+    
+
+
+    res.status(201).json({ message: 'User created successfully',
+      user: {
+        id: user._id,
+        email: user.email,
+        username: user.username,  // Add other relevant user fields
+        name: user.name,  // Add name if you have it
+      }
+      
+
+     });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -44,9 +64,12 @@ export const loginUser = async (req, res) => {
     // Generate JWT token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    // Send the token and user data in the response
+
+    // Set the token in the cookie
+    res.cookie("token", token, { httpOnly: true, secure: false, sameSite: "none" });
+
     res.status(200).json({
-      token,
+
       user: {
         id: user._id,
         email: user.email,
@@ -54,6 +77,36 @@ export const loginUser = async (req, res) => {
         name: user.name,  // Add name if you have it
       }
     });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+export const logoutUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    /*
+     const option = {
+      expires: new Date(Date.now()),
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+    };
+
+    return res.status(200).cookie("token", null, option).json({
+      success: true,
+      message: "User successfully logged out",
+    });
+  } 
+    */
+    // Clear the token from the cookies
+    res.clearCookie("token", { httpOnly: true, secure: true, sameSite: "Strict" });
+
+    // Send a response indicating the user has been logged out
+    res.status(200).json({ message: 'Logged out successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
