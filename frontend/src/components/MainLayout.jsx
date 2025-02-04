@@ -1,16 +1,20 @@
+import Sidebar from "./Sidebar";
 const MainLayout = ({ children }) => {
-    return (
-      <div className="min-h-screen flex flex-col">
-        {/* Navbar Here */}
-        <nav className="bg-primary text-white p-4">App Name</nav>
-  
-        {/* Page Content */}
-        <main className="flex-1 p-4">{children}</main>
-  
-        {/* Footer (optional) */}
+  return (
+    <div className="min-h-screen flex flex-col">
+      {/* Navbar */}
+      <nav className="bg-primary text-white p-4">App Name</nav>
+
+      {/* Main Content Area */}
+      <div className="flex flex-1">
+        {/* Sidebar (25%) */}
+        <Sidebar/>
+
+        {/* Main Section (75%) */}
+        <main className="w-full p-4 flex flex-col">{children}</main>
       </div>
-    );
-  };
-  
-  export default MainLayout;
-  
+    </div>
+  );
+};
+
+export default MainLayout;

@@ -5,8 +5,14 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './config/db.js';  // Importing the DB config
 import apiRoutes from './routes/auth.js'
+import cookieParser from 'cookie-parser';
+
+
+
 dotenv.config();
 const app = express();
+// Add this middleware before any route definitions
+app.use(cookieParser());
 
 // Middleware
 app.use(express.json());

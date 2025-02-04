@@ -11,10 +11,10 @@ function App() {
       <Routes>  
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route element={<PrivateRoute />}>
+      {/* <Route element={<PrivateRoute />}> */}
         <Route path="/" element={<Home />} />
         
-        </Route>
+        {/* </Route> */}
       </Routes>
     </Router>
     </AuthProvider>
