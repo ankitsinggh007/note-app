@@ -3,12 +3,17 @@ import NotesList from "./NotesList";
 import MessageInput from "./MessageInput";
 import MainLayout from "./MainLayout";
 import { useState } from "react";
+import audio1 from '../assets/bgm.mp3'
 
 const HomeComponent = () => {
   // Dummy Notes Data
   const [notes, setNotes] = useState([
-    { id: 1, title: "First Note", content: "This is a sample note.", favorite: false,date :1675110360000,type:'text' },
-    { id: 2, title: "Second Note", content: "Another note content.", favorite: true ,date :167511040000,type:'audio', duration:'50s' ,images:[1,2 ]},
+    { id: 1, title: "First Note", content: "This is a sample note.", favorite: false,date :1675110360000,type:'text',images:[] },
+    { id: 2, title: "Second Note", audio:audio1 ,content: "Another note content.", favorite: true ,date :167511040000,type:'audio', duration:'50s' ,images:[
+      "https://images.pexels.com/photos/29861006/pexels-photo-29861006/free-photo-of-majestic-mountain-peaks-shrouded-in-clouds.jpeg",
+      "https://images.pexels.com/photos/30375942/pexels-photo-30375942/free-photo-of-vintage-street-lamp-against-modern-architecture.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      "https://images.pexels.com/photos/12904144/pexels-photo-12904144.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+     ]},
   ]);
 
   // Edit Note

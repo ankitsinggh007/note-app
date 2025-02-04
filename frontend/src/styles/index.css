@@ -1,3 +1,38 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+  .custom-audio {
+    width: 80%;
+  }
+  
+  /* Hide default duration on the left */
+  .custom-audio::-webkit-media-controls-current-time-display {
+    color: black;  /* Ensuring played time is black */
+  }
+  
+  /* Move duration to the right and make it black */
+  .custom-audio::-webkit-media-controls-time-remaining-display {
+    order: 1;
+    margin-left: auto;
+    color: black;
+  }
+  
+  /* Customize play/pause button */
+  .custom-audio::-webkit-media-controls-play-button {
+    background-color: black; /* Black background */
+    border-radius: 50%;
+    color: white !important; /* White play/pause icon */
+  }
+  
+  /* Customize seek bar color */
+  .custom-audio::-webkit-media-controls-timeline {
+    accent-color: orange; /* Orange progress bar */
+    /* color: aquazz; */
+  }
+  
+  /* Customize volume slider */
+  .custom-audio::-webkit-media-controls-volume-slider {
+    accent-color: orange;
+    /* color: orange; */
+  }
+  
