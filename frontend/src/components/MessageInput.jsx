@@ -1,36 +1,50 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { FaDotCircle, FaRegDotCircle } from "react-icons/fa";
+import { MdInsertPhoto } from "react-icons/md";
+import { LuPenLine } from "react-icons/lu";
+import MessageModal from "./MessageModal";
 
-const MessageInput = ({ onNoteSubmit }) => {
+const MessageInput = ({ onNoteSubmit, openModal,closeModal } ) => {
   const [note, setNote] = useState("");
+  console.log(openModal,"uu")
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!note.trim()) return;
-    onNoteSubmit(note);
-    setNote("");
-  };
+ 
 
   return (
-    <form onSubmit={handleSubmit} className="flex items-center bg-white p-3 rounded-md shadow-md mt-4">
-      {/* Gallery Icon (Image Upload) */}
-      <button type="button" className="mr-2 p-2 text-gray-500 hover:text-primary">
-        📷
-      </button>
+    <>
+      <div 
+        onClick={openModal}
+        className=" flex items-center bg-white p-3 rounded-full border shadow-md cursor-pointer mt-4"
+      >
+        {/* Left Icons */}
+        <button type="button" className="absolute left-3 text-gray-500">
+          <MdInsertPhoto size={25} />
+        </button>
+        <button type="button" className="absolute left-12 text-gray-500">
+          <LuPenLine size={25} />
+        </button>
 
-      {/* Input Field */}
-      <input
-        type="text"
-        placeholder="Write a note..."
-        value={note}
-        onChange={(e) => setNote(e.target.value)}
-        className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-      />
+        {/* Input Field */}
+        <input
+          type="text"
+          placeholder="Write a note..."
+          value={note}
+          onChange={(e) => setNote(e.target.value)}
+          className="w-full p-2 pl-20 pr-14 rounded-full focus:outline-none"
+        />
 
-      {/* Start Recording Button */}
-      <button type="submit" className="ml-2 bg-primary text-white px-4 py-2 rounded-md hover:bg-purple-700">
-        🎙️ Start Recording
-      </button>
-    </form>
+        {/* Recording Button */}
+        <button
+          type="button"
+          className="absolute flex items-center gap-2 px-3 py-1 right-3 bg-red-500 text-white rounded-3xl"
+        >
+           <FaDotCircle size={20} />
+          <span>Start Recording</span>
+        </button>
+      </div>
+
+      {/* {isModalOpen && <MessageModal onClose={closeModal} onSubmit={onNoteSubmit} />} */}
+    </>
   );
 };
 

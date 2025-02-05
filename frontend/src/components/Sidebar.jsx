@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import { IoHomeSharp } from "react-icons/io5";
 import { FaStar } from "react-icons/fa6";
 import { useState } from "react";
+import logo from "../assets/logo.svg"
 
 const Sidebar = () => {
   const { logout } = useAuth();
@@ -30,7 +31,7 @@ const Sidebar = () => {
     <aside className="w-1/4 min-h-screen bg-white shadow-md p-4 flex flex-col justify-between relative">
       {/* Logo & App Name */}
       <div className="flex items-center space-x-2 mb-6">
-        <img src="/logo.png" alt="Logo" className="w-8 h-8" />
+        <img src={logo} alt="Logo" className="w-8 h-8" />
         <h2 className="text-lg font-bold text-black">AI Notes</h2>
       </div>
 
