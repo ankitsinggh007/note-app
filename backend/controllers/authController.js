@@ -18,7 +18,6 @@ export const registerUser = async (req, res) => {
     console.log(userExists,"userexist")
     // Create a new user
     const user = new User({ email, password, username });
-    await user.save();
       
     // Generate JWT token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
@@ -66,7 +65,11 @@ export const loginUser = async (req, res) => {
 
 
     // Set the token in the cookie
-    res.cookie("token", token, { httpOnly: true, secure: false, sameSite: "none" });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // Secure only in production
+      sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+    });
 
     res.status(200).json({
 
@@ -103,8 +106,11 @@ export const logoutUser = async (req, res) => {
   } 
     */
     // Clear the token from the cookies
-    res.clearCookie("token", { httpOnly: true, secure: true, sameSite: "Strict" });
-
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // Match with res.cookie
+      sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+    });
     // Send a response indicating the user has been logged out
     res.status(200).json({ message: 'Logged out successfully' });
   } catch (error) {
